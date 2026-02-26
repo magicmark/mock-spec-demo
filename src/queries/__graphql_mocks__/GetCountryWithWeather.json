@@ -1,0 +1,52 @@
+{
+  "current-weather": {
+    "data": {
+      "temperature": 72,
+      "condition": "Partly Cloudy",
+      "forecast": [
+        {
+          "day": "Monday",
+          "high": 75,
+          "low": 62,
+          "precipitation": 10
+        },
+        {
+          "day": "Tuesday",
+          "high": 78,
+          "low": 64,
+          "precipitation": 5
+        },
+        {
+          "day": "Wednesday",
+          "high": 73,
+          "low": 60,
+          "precipitation": 30
+        }
+      ]
+    },
+    "__appliesTo__": "Country.weather",
+    "__description__": "Current weather conditions with a 3-day forecast including temperature in Fahrenheit and precipitation chance percentage"
+  },
+  "rainy-weather": {
+    "data": {
+      "temperature": 58,
+      "condition": "Rainy",
+      "forecast": [
+        {
+          "day": "Monday",
+          "high": 60,
+          "low": 55,
+          "precipitation": 80
+        },
+        {
+          "day": "Tuesday",
+          "high": 62,
+          "low": 56,
+          "precipitation": 70
+        }
+      ]
+    },
+    "__appliesTo__": "Country.weather",
+    "__description__": "Rainy weather conditions with high precipitation chances"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "fictional-capital": {
+    "data": "Wakanda City",
+    "__appliesTo__": "Country.capital",
+    "__description__": "A fictional capital city name for testing mock functionality"
+  },
+  "empty-capital": {
+    "data": null,
+    "__appliesTo__": "Country.capital",
+    "__description__": "Returns null for the capital field, simulating a country without a defined capital"
+  },
+  "capital-with-error": {
+    "data": null,
+    "errors": [
+      {
+        "message": "Capital information temporarily unavailable",
+        "path": ["country", "capital"],
+        "extensions": {
+          "code": "SERVICE_UNAVAILABLE"
+        }
+      }
+    ],
+    "__appliesTo__": "Country.capital",
+    "__description__": "Simulates an error state when fetching capital information"
+  }
+}

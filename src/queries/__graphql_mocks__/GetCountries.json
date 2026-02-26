@@ -1,0 +1,61 @@
+{
+  "top-three": {
+    "data": {
+      "countries": [
+        {
+          "code": "US",
+          "name": "United States",
+          "capital": "Washington D.C.",
+          "emoji": "🇺🇸"
+        },
+        {
+          "code": "GB",
+          "name": "United Kingdom",
+          "capital": "London",
+          "emoji": "🇬🇧"
+        },
+        {
+          "code": "JP",
+          "name": "Japan",
+          "capital": "Tokyo",
+          "emoji": "🇯🇵"
+        }
+      ]
+    },
+    "__appliesTo__": "Query",
+    "__description__": "Returns a curated list of three major countries for demonstration purposes"
+  },
+  "empty-list": {
+    "data": {
+      "countries": []
+    },
+    "__appliesTo__": "Query",
+    "__description__": "Returns an empty list of countries, useful for testing empty state UI"
+  },
+  "fictional-nations": {
+    "data": {
+      "countries": [
+        {
+          "code": "WK",
+          "name": "Wakanda",
+          "capital": "Birnin Zana",
+          "emoji": "🦁"
+        },
+        {
+          "code": "GN",
+          "name": "Genovia",
+          "capital": "Pyrus",
+          "emoji": "👑"
+        },
+        {
+          "code": "ZM",
+          "name": "Zamunda",
+          "capital": "Zamunda City",
+          "emoji": "🦒"
+        }
+      ]
+    },
+    "__appliesTo__": "Query",
+    "__description__": "Returns fictional countries from popular movies and books for testing creative scenarios"
+  }
+}

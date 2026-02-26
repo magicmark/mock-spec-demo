@@ -1,0 +1,12 @@
+{
+  "estimated-population": {
+    "data": 331900000,
+    "__appliesTo__": "Country.population",
+    "__description__": "Estimated population for the country based on recent census data"
+  },
+  "small-population": {
+    "data": 50000,
+    "__appliesTo__": "Country.population",
+    "__description__": "Mock data for a small country with low population"
+  }
+}
