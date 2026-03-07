@@ -4,9 +4,6 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-overrides:
-  apollo-client-mock-directive-plugin: link:../apollo-client-mock-directive-plugin
-
 importers:
 
   .:
@@ -15,8 +12,8 @@ importers:
         specifier: ^4.1.6
         version: 4.1.6(graphql@16.13.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(rxjs@7.8.2)
       apollo-client-mock-directive-plugin:
-        specifier: link:../apollo-client-mock-directive-plugin
-        version: link:../apollo-client-mock-directive-plugin
+        specifier: github:magicmark/apollo-client-mock-directive-plugin
+        version: https://codeload.github.com/magicmark/apollo-client-mock-directive-plugin/tar.gz/64226d8716a07e24cf0e4590c6559c0bf41e19c5(@apollo/client@4.1.6(graphql@16.13.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(rxjs@7.8.2))(graphql@16.13.0)
       graphql:
         specifier: ^16.13.0
         version: 16.13.0
@@ -496,6 +493,13 @@ packages:
   '@wry/trie@0.5.0':
     resolution: {integrity: sha512-FNoYzHawTMk/6KMQoEG5O4PuioX19UbwdQKF44yw0nLfOypfQdjtfZzo/UIJWAJ23sNIFbD1Ug9lbaDGMwbqQA==}
     engines: {node: '>=8'}
+
+  apollo-client-mock-directive-plugin@https://codeload.github.com/magicmark/apollo-client-mock-directive-plugin/tar.gz/64226d8716a07e24cf0e4590c6559c0bf41e19c5:
+    resolution: {tarball: https://codeload.github.com/magicmark/apollo-client-mock-directive-plugin/tar.gz/64226d8716a07e24cf0e4590c6559c0bf41e19c5}
+    version: 0.1.0
+    peerDependencies:
+      '@apollo/client': '>=3.0.0'
+      graphql: '>=15.0.0'
 
   baseline-browser-mapping@2.10.0:
     resolution: {integrity: sha512-lIyg0szRfYbiy67j9KN8IyeD7q7hcmqnJ1ddWmNt19ItGpNN64mnllmxUNFIOdOm6by97jlL6wfpTTJrmnjWAA==}
@@ -1064,6 +1068,11 @@ snapshots:
   '@wry/trie@0.5.0':
     dependencies:
       tslib: 2.8.1
+
+  apollo-client-mock-directive-plugin@https://codeload.github.com/magicmark/apollo-client-mock-directive-plugin/tar.gz/64226d8716a07e24cf0e4590c6559c0bf41e19c5(@apollo/client@4.1.6(graphql@16.13.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(rxjs@7.8.2))(graphql@16.13.0):
+    dependencies:
+      '@apollo/client': 4.1.6(graphql@16.13.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(rxjs@7.8.2)
+      graphql: 16.13.0
 
   baseline-browser-mapping@2.10.0: {}
 
