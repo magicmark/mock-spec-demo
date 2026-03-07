@@ -1,6 +1,8 @@
 # GraphQL @mock Directive Demo
 
-This project implements the [GraphQL @mock directive specification](https://github.com/your-repo/graphql-mock-spec) using Apollo Client with React and Vite.
+**Live demo: https://mock-spec-demo.larah.me/**
+
+This project implements the [GraphQL @mock directive specification](https://public.larah.me/~mark/MockSpec.wip.html) using Apollo Client with React and Vite.
 
 ## What is the @mock Directive?
 
