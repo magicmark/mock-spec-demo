@@ -51,7 +51,7 @@ function DemoPanel({ query, mockFilename, mockContent, variables }: {
   mockContent: unknown;
   variables?: Record<string, unknown>;
 }) {
-  const [executeQuery, { loading, error, data }] = useLazyQuery(query);
+  const [executeQuery, { loading, error, data }] = useLazyQuery<Record<string, unknown>>(query);
 
   const panelStyle: React.CSSProperties = {
     flex: 1,
