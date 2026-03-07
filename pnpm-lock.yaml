@@ -4,6 +4,9 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+overrides:
+  apollo-client-mock-directive-plugin: link:../apollo-client-mock-directive-plugin
+
 importers:
 
   .:
@@ -11,6 +14,9 @@ importers:
       '@apollo/client':
         specifier: ^4.1.6
         version: 4.1.6(graphql@16.13.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(rxjs@7.8.2)
+      apollo-client-mock-directive-plugin:
+        specifier: link:../apollo-client-mock-directive-plugin
+        version: link:../apollo-client-mock-directive-plugin
       graphql:
         specifier: ^16.13.0
         version: 16.13.0

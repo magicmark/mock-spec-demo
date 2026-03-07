@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useLazyQuery } from "@apollo/client/react/compiled";
 import { print } from "graphql";
 import {
@@ -7,6 +7,29 @@ import {
   GET_COUNTRY_NEW_FIELD,
   GET_COUNTRY_NESTED_NEW,
 } from "./queries/countries";
+
+interface Country {
+  code: string;
+  name: string;
+  capital: string;
+  currency: string;
+  emoji: string;
+  languages: { code: string; name: string }[];
+  population?: number;
+  weather?: {
+    temperature: number;
+    condition: string;
+    forecast: { day: string; high: number; low: number; precipitation: number }[];
+  };
+}
+
+interface CountriesData {
+  countries: Country[];
+}
+
+interface CountryData {
+  country: Country;
+}
 
 function App() {
   const [selectedDemo, setSelectedDemo] = useState<string>("countries-mock");
@@ -93,7 +116,7 @@ function App() {
 }
 
 function CountriesOperationMock() {
-  const [executeQuery, { loading, error, data }] = useLazyQuery(GET_COUNTRIES_MOCK);
+  const [executeQuery, { loading, error, data }] = useLazyQuery<CountriesData>(GET_COUNTRIES_MOCK);
 
   return (
     <div>
@@ -156,7 +179,7 @@ function CountryFieldMock({
   code: string;
   setCode: (code: string) => void;
 }) {
-  const [executeQuery, { loading, error, data }] = useLazyQuery(GET_COUNTRY_WITH_MOCK);
+  const [executeQuery, { loading, error, data }] = useLazyQuery<CountryData>(GET_COUNTRY_WITH_MOCK);
 
   return (
     <div>
@@ -236,7 +259,7 @@ function CountryNewField({
   code: string;
   setCode: (code: string) => void;
 }) {
-  const [executeQuery, { loading, error, data }] = useLazyQuery(GET_COUNTRY_NEW_FIELD);
+  const [executeQuery, { loading, error, data }] = useLazyQuery<CountryData>(GET_COUNTRY_NEW_FIELD);
 
   return (
     <div>
@@ -316,7 +339,7 @@ function CountryNestedNew({
   code: string;
   setCode: (code: string) => void;
 }) {
-  const [executeQuery, { loading, error, data }] = useLazyQuery(GET_COUNTRY_NESTED_NEW);
+  const [executeQuery, { loading, error, data }] = useLazyQuery<CountryData>(GET_COUNTRY_NESTED_NEW);
 
   return (
     <div>
