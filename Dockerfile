@@ -14,15 +14,11 @@ RUN pnpm run build
 
 FROM node:22-slim AS runtime
 
-RUN corepack enable pnpm && corepack install -g pnpm@latest
+RUN npm install -g serve
 
 WORKDIR /app
-
 COPY --from=build /app/dist ./dist
-COPY --from=build /app/package.json ./
-COPY --from=build /app/vite.config.ts ./
-COPY --from=build /app/node_modules ./node_modules
 
 EXPOSE 8080
 
-CMD ["pnpm", "preview", "--host", "--port", "8080"]
+CMD ["serve", "-s", "dist", "-l", "8080"]
