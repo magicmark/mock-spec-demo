@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useLazyQuery } from "@apollo/client/react/compiled";
-import { print } from "graphql";
+import { type DocumentNode, print } from "graphql";
 import {
   GET_COUNTRY_WITH_MOCK,
   GET_COUNTRIES_MOCK,
@@ -8,137 +8,105 @@ import {
   GET_COUNTRY_NESTED_NEW,
 } from "./queries/countries";
 
-function App() {
-  const [selectedDemo, setSelectedDemo] = useState<string>("countries-mock");
-  const [countryCode, setCountryCode] = useState<string>("US");
+import GetCountriesMock from "./queries/__graphql_mocks__/GetCountries.json";
+import GetCountryMock from "./queries/__graphql_mocks__/GetCountry.json";
+import GetCountryWithPopulationMock from "./queries/__graphql_mocks__/GetCountryWithPopulation.json";
+import GetCountryWithWeatherMock from "./queries/__graphql_mocks__/GetCountryWithWeather.json";
 
-  return (
-    <div style={{ padding: "2rem", maxWidth: "1200px", margin: "0 auto" }}>
-      <h1 style={{ textAlign: "center" }}>GraphQL @mock Directive Demo</h1>
-      <p style={{ textAlign: "center" }}>
-        This demo implements the GraphQL @mock directive specification using
-        Apollo Client.
-      </p>
+const DEMOS = {
+  "operation-mock": {
+    label: "Operation-Level Mock",
+    query: GET_COUNTRIES_MOCK,
+    mockFilename: "GetCountries.json",
+    mockContent: GetCountriesMock,
+  },
+  "field-existing": {
+    label: "Field-Level Mock (Existing Field)",
+    query: GET_COUNTRY_WITH_MOCK,
+    mockFilename: "GetCountry.json",
+    mockContent: GetCountryMock,
+    variables: { code: "US" },
+  },
+  "field-new": {
+    label: "Field-Level Mock (New Field)",
+    query: GET_COUNTRY_NEW_FIELD,
+    mockFilename: "GetCountryWithPopulation.json",
+    mockContent: GetCountryWithPopulationMock,
+    variables: { code: "US" },
+  },
+  "field-new-nested": {
+    label: "Field-Level Mock (New Field w/ Selection Set)",
+    query: GET_COUNTRY_NESTED_NEW,
+    mockFilename: "GetCountryWithWeather.json",
+    mockContent: GetCountryWithWeatherMock,
+    variables: { code: "US" },
+  },
+} as const;
 
-      <div style={{ marginBottom: "2rem", padding: "1rem", background: "#f5f5f5", borderRadius: "8px" }}>
-        <h2>Select Demo</h2>
-        <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
-          <button
-            onClick={() => setSelectedDemo("countries-mock")}
-            style={{
-              padding: "0.5rem 1rem",
-              background: selectedDemo === "countries-mock" ? "#007bff" : "#6c757d",
-              color: "white",
-              border: "none",
-              borderRadius: "4px",
-              cursor: "pointer",
-            }}
-          >
-            Operation-Level Mock
-          </button>
-          <button
-            onClick={() => setSelectedDemo("country-field-mock")}
-            style={{
-              padding: "0.5rem 1rem",
-              background: selectedDemo === "country-field-mock" ? "#007bff" : "#6c757d",
-              color: "white",
-              border: "none",
-              borderRadius: "4px",
-              cursor: "pointer",
-            }}
-          >
-            Field-Level Mock (Existing Field)
-          </button>
-          <button
-            onClick={() => setSelectedDemo("country-new-field")}
-            style={{
-              padding: "0.5rem 1rem",
-              background: selectedDemo === "country-new-field" ? "#007bff" : "#6c757d",
-              color: "white",
-              border: "none",
-              borderRadius: "4px",
-              cursor: "pointer",
-            }}
-          >
-            New Field (Doesn't Exist Yet)
-          </button>
-          <button
-            onClick={() => setSelectedDemo("country-nested-new")}
-            style={{
-              padding: "0.5rem 1rem",
-              background: selectedDemo === "country-nested-new" ? "#007bff" : "#6c757d",
-              color: "white",
-              border: "none",
-              borderRadius: "4px",
-              cursor: "pointer",
-            }}
-          >
-            New Nested Types
-          </button>
-        </div>
-      </div>
+type DemoKey = keyof typeof DEMOS;
 
-      {selectedDemo === "countries-mock" && <CountriesOperationMock />}
-      {selectedDemo === "country-field-mock" && (
-        <CountryFieldMock code={countryCode} setCode={setCountryCode} />
-      )}
-      {selectedDemo === "country-new-field" && (
-        <CountryNewField code={countryCode} setCode={setCountryCode} />
-      )}
-      {selectedDemo === "country-nested-new" && (
-        <CountryNestedNew code={countryCode} setCode={setCountryCode} />
-      )}
-    </div>
-  );
-}
+function DemoPanel({ query, mockFilename, mockContent, variables }: {
+  query: DocumentNode;
+  mockFilename: string;
+  mockContent: unknown;
+  variables?: Record<string, unknown>;
+}) {
+  const [executeQuery, { loading, error, data }] = useLazyQuery(query);
 
-function CountriesOperationMock() {
-  const [executeQuery, { loading, error, data }] = useLazyQuery(GET_COUNTRIES_MOCK);
+  const panelStyle: React.CSSProperties = {
+    flex: 1,
+    minWidth: 0,
+    padding: "0.75rem",
+    background: "#f8f9fa",
+    borderRadius: "6px",
+    border: "1px solid #ccc",
+      };
 
   return (
     <div>
-      <h2>Operation-Level Mock: GetCountries</h2>
-      <p>
-        <strong>Status:</strong> Entire operation is mocked (no server request)
-      </p>
-      <p>
-        <strong>Mock Variant:</strong> "top-three"
-      </p>
-
-      <div style={{ marginBottom: "1rem", padding: "1rem", background: "#f8f9fa", borderRadius: "4px" }}>
-        <h3>GraphQL Query:</h3>
-        <pre style={{ background: "#fff", padding: "1rem", borderRadius: "4px", overflow: "auto", textAlign: "left" }}>
-          {print(GET_COUNTRIES_MOCK)}
-        </pre>
+      <div style={{ display: "flex", gap: "0.75rem", marginBottom: "0.75rem" }}>
+        <div style={panelStyle}>
+          <h3 style={{ margin: "0 0 0.5rem 0", fontSize: "0.95rem" }}>GraphQL Query</h3>
+          <pre style={{ background: "#fff", padding: "0.75rem", borderRadius: "4px", overflow: "auto", textAlign: "left", margin: 0, maxHeight: "400px", fontSize: "0.8rem" }}>
+            {print(query)}
+          </pre>
+        </div>
+        <div style={panelStyle}>
+          <h3 style={{ margin: "0 0 0.5rem 0", fontSize: "0.95rem" }}>Mock File: <code>{mockFilename}</code></h3>
+          <pre style={{ background: "#fff", padding: "0.75rem", borderRadius: "4px", overflow: "auto", textAlign: "left", margin: 0, maxHeight: "400px", fontSize: "0.8rem" }}>
+            {JSON.stringify(mockContent, null, 2)}
+          </pre>
+        </div>
       </div>
 
-      <button
-        onClick={() => executeQuery()}
-        style={{
-          padding: "0.75rem 1.5rem",
-          background: "#28a745",
-          color: "white",
-          border: "none",
-          borderRadius: "4px",
-          cursor: "pointer",
-          fontSize: "1rem",
-          fontWeight: "bold",
-        }}
-      >
-        Execute Query
-      </button>
-
-      <p style={{ marginTop: "1rem", color: "#6c757d", fontStyle: "italic" }}>
-        Note: Open DevTools Network tab to see that NO network request is sent (operation-level mock)
-      </p>
+      <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
+        <button
+          onClick={() => executeQuery(variables ? { variables } : undefined)}
+          style={{
+            padding: "0.75rem 1.5rem",
+            background: "#28a745",
+            color: "white",
+            border: "none",
+            borderRadius: "4px",
+            cursor: "pointer",
+            fontSize: "1rem",
+            fontWeight: "bold",
+          }}
+        >
+          Execute Query
+        </button>
+        <span style={{ fontSize: "0.8rem", color: "#6c757d" }}>
+          Open Chrome DevTools Network tab to inspect the request and observe which fields are sent to (or omitted from) the server.
+        </span>
+      </div>
 
       {loading && <p>Loading...</p>}
       {error && <p style={{ color: "red" }}>Error: {error.message}</p>}
 
       {data && (
         <div style={{ marginTop: "1rem" }}>
-          <h3>Response (Fully Mocked):</h3>
-          <div style={{ padding: "1.5rem", border: "2px solid #ffc107", borderRadius: "8px", background: "#fff3cd" }}>
+          <h3>Response:</h3>
+          <div style={{ padding: "1.5rem", border: "2px solid #007bff", borderRadius: "8px", background: "#cfe2ff" }}>
             <pre style={{ textAlign: "left", overflow: "auto", margin: 0 }}>
               {JSON.stringify(data, null, 2)}
             </pre>
@@ -149,242 +117,53 @@ function CountriesOperationMock() {
   );
 }
 
-function CountryFieldMock({
-  code,
-  setCode,
-}: {
-  code: string;
-  setCode: (code: string) => void;
-}) {
-  const [executeQuery, { loading, error, data }] = useLazyQuery(GET_COUNTRY_WITH_MOCK);
+function App() {
+  const [selectedDemo, setSelectedDemo] = useState<DemoKey>("operation-mock");
+
+  const demo = DEMOS[selectedDemo];
 
   return (
-    <div>
-      <h2>Field-Level Mock: GetCountry (Existing Field)</h2>
-      <p>
-        <strong>Status:</strong> Capital field is mocked, other fields from real API
-      </p>
-      <p>
-        <strong>Mock Variant:</strong> "fictional-capital"
-      </p>
-
-      <div style={{ marginBottom: "1rem", padding: "1rem", background: "#f8f9fa", borderRadius: "4px" }}>
-        <h3>GraphQL Query:</h3>
-        <pre style={{ background: "#fff", padding: "1rem", borderRadius: "4px", overflow: "auto", textAlign: "left" }}>
-          {print(GET_COUNTRY_WITH_MOCK)}
-        </pre>
+    <div style={{ padding: "0.75rem 2rem 2rem", maxWidth: "1200px", margin: "0.5rem auto 0" }}>
+      <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: "0.75rem", flexWrap: "wrap", gap: "0.25rem 1rem" }}>
+        <h1 style={{ margin: 0, fontSize: "1.4rem", color: "#1a1a2e" }}>GraphQL <code style={{ fontSize: "1.3rem", color: "#e83e8c" }}>@mock</code> Directive Demo</h1>
+        <nav style={{ display: "flex", gap: "1rem", fontSize: "0.8rem" }}>
+          <a href="https://public.larah.me/~mark/MockSpec.wip.html" target="_blank" rel="noreferrer">Spec</a>
+          <a href="https://github.com/graphql/ai-wg/issues/79" target="_blank" rel="noreferrer">AI WG Discussion</a>
+          <a href="https://github.com/magicmark/mock-spec-demo" target="_blank" rel="noreferrer">Source</a>
+        </nav>
       </div>
 
-      <div style={{ marginBottom: "1rem", display: "flex", gap: "1rem", alignItems: "center" }}>
-        <label>
-          Country Code:{" "}
-          <input
-            type="text"
-            value={code}
-            onChange={(e) => setCode(e.target.value.toUpperCase())}
-            style={{
-              padding: "0.5rem",
-              border: "1px solid #ccc",
-              borderRadius: "4px",
-            }}
-            placeholder="e.g., US"
-          />
-        </label>
-        <button
-          onClick={() => executeQuery({ variables: { code } })}
-          style={{
-            padding: "0.75rem 1.5rem",
-            background: "#28a745",
-            color: "white",
-            border: "none",
-            borderRadius: "4px",
-            cursor: "pointer",
-            fontSize: "1rem",
-            fontWeight: "bold",
-          }}
-        >
-          Execute Query
-        </button>
-      </div>
-
-      <p style={{ marginTop: "1rem", color: "#6c757d", fontStyle: "italic" }}>
-        Note: The 'capital' field is mocked. All other fields are from the real API.
-      </p>
-
-      {loading && <p>Loading...</p>}
-      {error && <p style={{ color: "red" }}>Error: {error.message}</p>}
-
-      {data && data.country && (
-        <div style={{ marginTop: "1rem" }}>
-          <h3>Response (capital is mocked 🟡, rest is real 🟢):</h3>
-          <div style={{ padding: "1.5rem", border: "2px solid #007bff", borderRadius: "8px", background: "#cfe2ff" }}>
-            <div style={{ fontSize: "3rem", marginBottom: "1rem" }}>{data.country.emoji}</div>
-            <pre style={{ textAlign: "left", overflow: "auto", margin: 0 }}>
-              {JSON.stringify(data.country, null, 2)}
-            </pre>
-          </div>
+      <div style={{ marginBottom: "0.75rem", padding: "0.75rem 1rem", background: "#f8f9fa", borderRadius: "6px", border: "1px solid #ccc" }}>
+        <h2 style={{ margin: "0 0 0.5rem 0", fontSize: "1.1rem" }}>Select Demo</h2>
+        <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+          {(Object.keys(DEMOS) as DemoKey[]).map((key) => (
+            <button
+              key={key}
+              onClick={() => setSelectedDemo(key)}
+              style={{
+                padding: "0.4rem 0.75rem",
+                background: selectedDemo === key ? "#007bff" : "#6c757d",
+                color: "white",
+                border: selectedDemo === key ? "2px solid #0056b3" : "2px solid #545b62",
+                borderRadius: "4px",
+                cursor: "pointer",
+                fontSize: "0.85rem",
+                fontWeight: "bold",
+              }}
+            >
+              {DEMOS[key].label}
+            </button>
+          ))}
         </div>
-      )}
-    </div>
-  );
-}
-
-function CountryNewField({
-  code,
-  setCode,
-}: {
-  code: string;
-  setCode: (code: string) => void;
-}) {
-  const [executeQuery, { loading, error, data }] = useLazyQuery(GET_COUNTRY_NEW_FIELD);
-
-  return (
-    <div>
-      <h2>New Field Mock: Population Field Doesn't Exist Yet</h2>
-      <p>
-        <strong>Status:</strong> The 'population' field doesn't exist in the real schema - it's fully mocked
-      </p>
-      <p>
-        <strong>Mock Variant:</strong> "estimated-population"
-      </p>
-
-      <div style={{ marginBottom: "1rem", padding: "1rem", background: "#f8f9fa", borderRadius: "4px" }}>
-        <h3>GraphQL Query:</h3>
-        <pre style={{ background: "#fff", padding: "1rem", borderRadius: "4px", overflow: "auto", textAlign: "left" }}>
-          {print(GET_COUNTRY_NEW_FIELD)}
-        </pre>
       </div>
 
-      <div style={{ marginBottom: "1rem", display: "flex", gap: "1rem", alignItems: "center" }}>
-        <label>
-          Country Code:{" "}
-          <input
-            type="text"
-            value={code}
-            onChange={(e) => setCode(e.target.value.toUpperCase())}
-            style={{
-              padding: "0.5rem",
-              border: "1px solid #ccc",
-              borderRadius: "4px",
-            }}
-            placeholder="e.g., US"
-          />
-        </label>
-        <button
-          onClick={() => executeQuery({ variables: { code } })}
-          style={{
-            padding: "0.75rem 1.5rem",
-            background: "#28a745",
-            color: "white",
-            border: "none",
-            borderRadius: "4px",
-            cursor: "pointer",
-            fontSize: "1rem",
-            fontWeight: "bold",
-          }}
-        >
-          Execute Query
-        </button>
-      </div>
-
-      <p style={{ marginTop: "1rem", color: "#6c757d", fontStyle: "italic" }}>
-        Note: The 'population' field doesn't exist in the Countries API schema yet. It's being mocked to simulate future development.
-      </p>
-
-      {loading && <p>Loading...</p>}
-      {error && <p style={{ color: "red" }}>Error: {error.message}</p>}
-
-      {data && data.country && (
-        <div style={{ marginTop: "1rem" }}>
-          <h3>Response (population is mocked 🟡, rest is real 🟢):</h3>
-          <div style={{ padding: "1.5rem", border: "2px solid #9b59b6", borderRadius: "8px", background: "#e8daef" }}>
-            <div style={{ fontSize: "3rem", marginBottom: "1rem" }}>{data.country.emoji}</div>
-            <pre style={{ textAlign: "left", overflow: "auto", margin: 0 }}>
-              {JSON.stringify(data.country, null, 2)}
-            </pre>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
-
-function CountryNestedNew({
-  code,
-  setCode,
-}: {
-  code: string;
-  setCode: (code: string) => void;
-}) {
-  const [executeQuery, { loading, error, data }] = useLazyQuery(GET_COUNTRY_NESTED_NEW);
-
-  return (
-    <div>
-      <h2>New Nested Types: Weather Field with Forecast</h2>
-      <p>
-        <strong>Status:</strong> The entire 'weather' field and its nested types don't exist - fully mocked
-      </p>
-      <p>
-        <strong>Mock Variant:</strong> "current-weather"
-      </p>
-
-      <div style={{ marginBottom: "1rem", padding: "1rem", background: "#f8f9fa", borderRadius: "4px" }}>
-        <h3>GraphQL Query:</h3>
-        <pre style={{ background: "#fff", padding: "1rem", borderRadius: "4px", overflow: "auto", textAlign: "left" }}>
-          {print(GET_COUNTRY_NESTED_NEW)}
-        </pre>
-      </div>
-
-      <div style={{ marginBottom: "1rem", display: "flex", gap: "1rem", alignItems: "center" }}>
-        <label>
-          Country Code:{" "}
-          <input
-            type="text"
-            value={code}
-            onChange={(e) => setCode(e.target.value.toUpperCase())}
-            style={{
-              padding: "0.5rem",
-              border: "1px solid #ccc",
-              borderRadius: "4px",
-            }}
-            placeholder="e.g., US"
-          />
-        </label>
-        <button
-          onClick={() => executeQuery({ variables: { code } })}
-          style={{
-            padding: "0.75rem 1.5rem",
-            background: "#28a745",
-            color: "white",
-            border: "none",
-            borderRadius: "4px",
-            cursor: "pointer",
-            fontSize: "1rem",
-            fontWeight: "bold",
-          }}
-        >
-          Execute Query
-        </button>
-      </div>
-
-      <p style={{ marginTop: "1rem", color: "#6c757d", fontStyle: "italic" }}>
-        Note: The 'weather' field with nested forecast data doesn't exist in the schema. This demonstrates mocking complex nested types for future features.
-      </p>
-
-      {loading && <p>Loading...</p>}
-      {error && <p style={{ color: "red" }}>Error: {error.message}</p>}
-
-      {data && data.country && (
-        <div style={{ marginTop: "1rem" }}>
-          <h3>Response (weather is fully mocked 🟡, rest is real 🟢):</h3>
-          <div style={{ padding: "1.5rem", border: "2px solid #17a2b8", borderRadius: "8px", background: "#d1ecf1" }}>
-            <div style={{ fontSize: "3rem", marginBottom: "1rem" }}>{data.country.emoji}</div>
-            <pre style={{ textAlign: "left", overflow: "auto", margin: 0 }}>
-              {JSON.stringify(data.country, null, 2)}
-            </pre>
-          </div>
-        </div>
-      )}
+      <DemoPanel
+        key={selectedDemo}
+        query={demo.query}
+        mockFilename={demo.mockFilename}
+        mockContent={demo.mockContent}
+        variables={"variables" in demo ? demo.variables : undefined}
+      />
     </div>
   );
 }

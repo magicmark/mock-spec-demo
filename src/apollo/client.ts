@@ -1,5 +1,5 @@
 import { ApolloClient, InMemoryCache, HttpLink, from } from "@apollo/client";
-import { MockLink } from "./mockLink";
+import { MockLink } from "apollo-client-mock-directive-plugin";
 import { mockRegistry } from "./mockRegistry";
 
 // Create HTTP link for the countries API
