@@ -58,3 +58,15 @@ export const GET_COUNTRY_NESTED_NEW = gql`
     }
   }
 `;
+
+export const GET_COUNTRY_INLINE_VALUE = gql`
+  query GetCountryInlineValue($code: ID!) {
+    country(code: $code) {
+      code
+      name
+      emoji
+      capital @mock(value: "Wakanda City")
+      population @mock(value: "331900000")
+    }
+  }
+`;

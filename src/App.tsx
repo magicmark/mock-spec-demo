@@ -6,6 +6,7 @@ import {
   GET_COUNTRIES_MOCK,
   GET_COUNTRY_NEW_FIELD,
   GET_COUNTRY_NESTED_NEW,
+  GET_COUNTRY_INLINE_VALUE,
 } from "./queries/countries";
 
 import GetCountriesMock from "./queries/__graphql_mocks__/GetCountries.json";
@@ -41,13 +42,20 @@ const DEMOS = {
     mockContent: GetCountryWithWeatherMock,
     variables: { code: "US" },
   },
+  "inline-value": {
+    label: "Inline Value (No Mock File)",
+    query: GET_COUNTRY_INLINE_VALUE,
+    mockFilename: null,
+    mockContent: null,
+    variables: { code: "US" },
+  },
 } as const;
 
 type DemoKey = keyof typeof DEMOS;
 
 function DemoPanel({ query, mockFilename, mockContent, variables }: {
   query: DocumentNode;
-  mockFilename: string;
+  mockFilename: string | null;
   mockContent: unknown;
   variables?: Record<string, unknown>;
 }) {
@@ -72,10 +80,21 @@ function DemoPanel({ query, mockFilename, mockContent, variables }: {
           </pre>
         </div>
         <div style={panelStyle}>
-          <h3 style={{ margin: "0 0 0.5rem 0", fontSize: "0.95rem" }}>Mock File: <code>{mockFilename}</code></h3>
-          <pre style={{ background: "#fff", padding: "0.75rem", borderRadius: "4px", overflow: "auto", textAlign: "left", margin: 0, maxHeight: "400px", fontSize: "0.8rem" }}>
-            {JSON.stringify(mockContent, null, 2)}
-          </pre>
+          {mockFilename ? (
+            <>
+              <h3 style={{ margin: "0 0 0.5rem 0", fontSize: "0.95rem" }}>Mock File: <code>{mockFilename}</code></h3>
+              <pre style={{ background: "#fff", padding: "0.75rem", borderRadius: "4px", overflow: "auto", textAlign: "left", margin: 0, maxHeight: "400px", fontSize: "0.8rem" }}>
+                {JSON.stringify(mockContent, null, 2)}
+              </pre>
+            </>
+          ) : (
+            <>
+              <h3 style={{ margin: "0 0 0.5rem 0", fontSize: "0.95rem" }}>Mock File</h3>
+              <div style={{ background: "#fff", padding: "0.75rem", borderRadius: "4px", color: "#6c757d", fontSize: "0.85rem" }}>
+                No mock file needed — mock values are provided inline via the <code>value</code> argument.
+              </div>
+            </>
+          )}
         </div>
       </div>
 
@@ -160,8 +179,8 @@ function App() {
       <DemoPanel
         key={selectedDemo}
         query={demo.query}
-        mockFilename={demo.mockFilename}
-        mockContent={demo.mockContent}
+        mockFilename={demo.mockFilename ?? null}
+        mockContent={demo.mockContent ?? null}
         variables={"variables" in demo ? demo.variables : undefined}
       />
     </div>

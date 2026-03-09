@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@apollo/client": "^4.1.6",
-    "apollo-client-mock-directive-plugin": "github:magicmark/apollo-client-mock-directive-plugin",
+    "apollo-client-mock-directive-plugin": "github:magicmark/apollo-client-mock-directive-plugin#inline-value-arg",
     "graphql": "^16.13.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4"
