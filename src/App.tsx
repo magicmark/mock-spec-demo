@@ -16,34 +16,34 @@ import GetCountryWithWeatherMock from "./queries/__graphql_mocks__/GetCountryWit
 
 const DEMOS = {
   "operation-mock": {
-    label: "Operation-Level Mock",
+    label: "Operation Mock",
     query: GET_COUNTRIES_MOCK,
     mockFilename: "GetCountries.json",
     mockContent: GetCountriesMock,
   },
   "field-existing": {
-    label: "Field-Level Mock (Existing Field)",
+    label: "Field Mock (Existing)",
     query: GET_COUNTRY_WITH_MOCK,
     mockFilename: "GetCountry.json",
     mockContent: GetCountryMock,
     variables: { code: "US" },
   },
   "field-new": {
-    label: "Field-Level Mock (New Field)",
+    label: "Field Mock (New)",
     query: GET_COUNTRY_NEW_FIELD,
     mockFilename: "GetCountryWithPopulation.json",
     mockContent: GetCountryWithPopulationMock,
     variables: { code: "US" },
   },
   "field-new-nested": {
-    label: "Field-Level Mock (New Field w/ Selection Set)",
+    label: "Field Mock (New w/ Selection Set)",
     query: GET_COUNTRY_NESTED_NEW,
     mockFilename: "GetCountryWithWeather.json",
     mockContent: GetCountryWithWeatherMock,
     variables: { code: "US" },
   },
   "inline-value": {
-    label: "Inline Value (No Mock File)",
+    label: "Field Mock (Inline Value)",
     query: GET_COUNTRY_INLINE_VALUE,
     mockFilename: null,
     mockContent: null,
