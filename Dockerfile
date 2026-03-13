@@ -1,4 +1,4 @@
-FROM node:22-slim AS build
+FROM node:24-slim AS build
 
 ENV CI=true
 RUN corepack enable pnpm && corepack install -g pnpm@latest
@@ -12,7 +12,7 @@ RUN pnpm run build
 
 # ---
 
-FROM node:22-slim AS runtime
+FROM node:24-slim AS runtime
 
 RUN npm install -g serve
 
