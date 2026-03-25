@@ -24,7 +24,7 @@
         }
       ]
     },
-    "__appliesTo__": "Country.weather",
+    "__path__": "country.weather",
     "__description__": "Current weather conditions with a 3-day forecast including temperature in Fahrenheit and precipitation chance percentage"
   },
   "rainy-weather": {
@@ -46,7 +46,7 @@
         }
       ]
     },
-    "__appliesTo__": "Country.weather",
+    "__path__": "country.weather",
     "__description__": "Rainy weather conditions with high precipitation chances"
   }
 }
