@@ -1,12 +1,12 @@
 {
   "fictional-capital": {
     "data": "Wakanda City",
-    "__appliesTo__": "Country.capital",
+    "__path__": "country.capital",
     "__description__": "A fictional capital city name for testing mock functionality"
   },
   "empty-capital": {
     "data": null,
-    "__appliesTo__": "Country.capital",
+    "__path__": "country.capital",
     "__description__": "Returns null for the capital field, simulating a country without a defined capital"
   },
   "capital-with-error": {
@@ -20,7 +20,7 @@
         }
       }
     ],
-    "__appliesTo__": "Country.capital",
+    "__path__": "country.capital",
     "__description__": "Simulates an error state when fetching capital information"
   }
 }

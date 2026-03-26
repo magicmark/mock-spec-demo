@@ -22,14 +22,14 @@
         }
       ]
     },
-    "__appliesTo__": "Query",
+    "__path__": "Query",
     "__description__": "Returns a curated list of three major countries for demonstration purposes"
   },
   "empty-list": {
     "data": {
       "countries": []
     },
-    "__appliesTo__": "Query",
+    "__path__": "Query",
     "__description__": "Returns an empty list of countries, useful for testing empty state UI"
   },
   "fictional-nations": {
@@ -55,7 +55,7 @@
         }
       ]
     },
-    "__appliesTo__": "Query",
+    "__path__": "Query",
     "__description__": "Returns fictional countries from popular movies and books for testing creative scenarios"
   }
 }
