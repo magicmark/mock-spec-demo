@@ -13,7 +13,7 @@ importers:
         version: 4.1.6(graphql@16.13.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(rxjs@7.8.2)
       apollo-client-mock-directive-plugin:
         specifier: github:magicmark/apollo-client-mock-directive-plugin
-        version: https://codeload.github.com/magicmark/apollo-client-mock-directive-plugin/tar.gz/3ef56ed0b8dd9d8149b867f5d8c3ed7e4426609b(@apollo/client@4.1.6(graphql@16.13.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(rxjs@7.8.2))(graphql@16.13.1)
+        version: https://codeload.github.com/magicmark/apollo-client-mock-directive-plugin/tar.gz/9816910d6c75a0ebc0e685c030726b8d10ae0c8c(@apollo/client@4.1.6(graphql@16.13.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(rxjs@7.8.2))(graphql@16.13.1)
       graphql:
         specifier: ^16.13.0
         version: 16.13.1
@@ -494,8 +494,8 @@ packages:
     resolution: {integrity: sha512-FNoYzHawTMk/6KMQoEG5O4PuioX19UbwdQKF44yw0nLfOypfQdjtfZzo/UIJWAJ23sNIFbD1Ug9lbaDGMwbqQA==}
     engines: {node: '>=8'}
 
-  apollo-client-mock-directive-plugin@https://codeload.github.com/magicmark/apollo-client-mock-directive-plugin/tar.gz/3ef56ed0b8dd9d8149b867f5d8c3ed7e4426609b:
-    resolution: {tarball: https://codeload.github.com/magicmark/apollo-client-mock-directive-plugin/tar.gz/3ef56ed0b8dd9d8149b867f5d8c3ed7e4426609b}
+  apollo-client-mock-directive-plugin@https://codeload.github.com/magicmark/apollo-client-mock-directive-plugin/tar.gz/9816910d6c75a0ebc0e685c030726b8d10ae0c8c:
+    resolution: {tarball: https://codeload.github.com/magicmark/apollo-client-mock-directive-plugin/tar.gz/9816910d6c75a0ebc0e685c030726b8d10ae0c8c}
     version: 0.1.0
     peerDependencies:
       '@apollo/client': '>=3.0.0'
@@ -1069,7 +1069,7 @@ snapshots:
     dependencies:
       tslib: 2.8.1
 
-  apollo-client-mock-directive-plugin@https://codeload.github.com/magicmark/apollo-client-mock-directive-plugin/tar.gz/3ef56ed0b8dd9d8149b867f5d8c3ed7e4426609b(@apollo/client@4.1.6(graphql@16.13.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(rxjs@7.8.2))(graphql@16.13.1):
+  apollo-client-mock-directive-plugin@https://codeload.github.com/magicmark/apollo-client-mock-directive-plugin/tar.gz/9816910d6c75a0ebc0e685c030726b8d10ae0c8c(@apollo/client@4.1.6(graphql@16.13.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(rxjs@7.8.2))(graphql@16.13.1):
     dependencies:
       '@apollo/client': 4.1.6(graphql@16.13.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(rxjs@7.8.2)
       graphql: 16.13.1
