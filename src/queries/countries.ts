@@ -16,6 +16,21 @@ export const GET_COUNTRY_WITH_MOCK = gql`
   }
 `;
 
+export const GET_COUNTRY_WITH_FRAGMENT_MOCK = gql`
+  query GetCountryWithCapitalFragment($code: ID!) {
+    country(code: $code) {
+      code
+      name
+      emoji
+      ...CountryCapitalFragment
+    }
+  }
+
+  fragment CountryCapitalFragment on Country {
+    capital @mock(variant: "fictional-capital")
+  }
+`;
+
 export const GET_COUNTRY_CAPITAL_ERROR = gql`
   query GetCountryWithCapitalError($code: ID!) {
     country(code: $code) {

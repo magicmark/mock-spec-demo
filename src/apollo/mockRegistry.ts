@@ -8,6 +8,7 @@
  */
 
 // Import mock files (will be created later)
+import CountryCapitalFragmentMocks from "../queries/__graphql_mocks__/CountryCapitalFragment.json";
 import GetCountryMocks from "../queries/__graphql_mocks__/GetCountry.json";
 import GetCountryWithCapitalErrorMocks from "../queries/__graphql_mocks__/GetCountryWithCapitalError.json";
 import GetCountriesMocks from "../queries/__graphql_mocks__/GetCountries.json";
@@ -15,6 +16,7 @@ import GetCountryWithPopulationMocks from "../queries/__graphql_mocks__/GetCount
 import GetCountryWithWeatherMocks from "../queries/__graphql_mocks__/GetCountryWithWeather.json";
 
 export const mockRegistry = {
+  CountryCapitalFragment: CountryCapitalFragmentMocks,
   GetCountry: GetCountryMocks,
   GetCountryWithCapitalError: GetCountryWithCapitalErrorMocks,
   GetCountries: GetCountriesMocks,
