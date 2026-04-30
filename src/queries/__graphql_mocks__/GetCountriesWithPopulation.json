@@ -1,0 +1,7 @@
+{
+  "estimated-population": {
+    "data": 331900000,
+    "__path__": "continent.countries.population",
+    "__description__": "An estimated population value applied to each country returned by a continent's country list"
+  }
+}

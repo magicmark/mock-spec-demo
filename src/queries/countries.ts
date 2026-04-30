@@ -6,12 +6,7 @@ export const GET_COUNTRY_WITH_MOCK = gql`
       code
       name
       capital @mock(variant: "fictional-capital")
-      currency
       emoji
-      languages {
-        code
-        name
-      }
     }
   }
 `;
@@ -28,6 +23,60 @@ export const GET_COUNTRY_WITH_FRAGMENT_MOCK = gql`
 
   fragment CountryCapitalFragment on Country {
     capital @mock(variant: "fictional-capital")
+  }
+`;
+
+export const GET_COUNTRY_ALIAS_MOCK = gql`
+  query GetCountryAlias($code: ID!) {
+    country(code: $code) {
+      code
+      name
+      capital @mock(variant: "fictional-capital")
+      home: capital @mock(variant: "fictional-home")
+      emoji
+    }
+  }
+`;
+
+export const GET_COUNTRIES_LIST_MOCK = gql`
+  query GetCountriesList {
+    continent(code: "AN") {
+      code
+      countries @mock(variant: "antarctic-countries") {
+        code
+        name
+      }
+    }
+  }
+`;
+
+export const GET_COUNTRIES_WITH_POPULATION_MOCK = gql`
+  query GetCountriesWithPopulation {
+    continent(code: "AN") {
+      code
+      countries {
+        code
+        name
+        population @mock(variant: "estimated-population")
+      }
+    }
+  }
+`;
+
+export const GET_COUNTRIES_WITH_POPULATION_FRAGMENT_MOCK = gql`
+  query GetCountriesWithPopulationFragment {
+    continent(code: "AN") {
+      code
+      countries {
+        code
+        name
+        ...CountryPopulationFragment
+      }
+    }
+  }
+
+  fragment CountryPopulationFragment on Country {
+    population @mock(variant: "estimated-population")
   }
 `;
 
@@ -60,6 +109,7 @@ export const GET_COUNTRY_NEW_FIELD = gql`
       name
       capital
       emoji
+      # this field does not exist on the server!
       population @mock(variant: "estimated-population")
     }
   }
@@ -71,6 +121,7 @@ export const GET_COUNTRY_NESTED_NEW = gql`
       code
       name
       emoji
+      # this field does not exist on the server!
       weather @mock(variant: "current-weather") {
         temperature
         condition
