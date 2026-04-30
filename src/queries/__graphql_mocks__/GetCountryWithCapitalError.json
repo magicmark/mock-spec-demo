@@ -1,0 +1,16 @@
+{
+  "capital-with-error": {
+    "data": null,
+    "errors": [
+      {
+        "message": "Capital information temporarily unavailable",
+        "path": ["country", "capital"],
+        "extensions": {
+          "code": "SERVICE_UNAVAILABLE"
+        }
+      }
+    ],
+    "__path__": "country.capital",
+    "__description__": "Simulates a field-level GraphQL error while preserving the rest of the country response"
+  }
+}

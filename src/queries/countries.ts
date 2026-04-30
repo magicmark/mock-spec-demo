@@ -16,6 +16,17 @@ export const GET_COUNTRY_WITH_MOCK = gql`
   }
 `;
 
+export const GET_COUNTRY_CAPITAL_ERROR = gql`
+  query GetCountryWithCapitalError($code: ID!) {
+    country(code: $code) {
+      code
+      name
+      capital @mock(variant: "capital-with-error")
+      emoji
+    }
+  }
+`;
+
 export const GET_COUNTRIES_MOCK = gql`
   query GetCountries @mock(variant: "top-three") {
     countries {
