@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { useLazyQuery } from "@apollo/client/react/compiled";
 import { type DocumentNode, print } from "graphql";
-import type { HighlighterCore } from "shiki/core";
+import type { HighlighterCore, LanguageRegistration } from "shiki/core";
+import graphqlGrammar from "tm-grammars/grammars/graphql.json";
+import jsonGrammar from "tm-grammars/grammars/json.json";
 import {
   GET_COUNTRIES_LIST_MOCK,
   GET_COUNTRIES_WITH_POPULATION_FRAGMENT_MOCK,
@@ -107,19 +109,20 @@ type DemoKey = keyof typeof DEMOS;
 type CodeLanguage = "graphql" | "json";
 
 const SYNTAX_THEME = "catppuccin-latte";
+// The @shikijs/langs GraphQL wrapper imports embedded JS/TS grammars for template interpolation.
+const GRAPHQL_GRAMMAR = { ...graphqlGrammar, aliases: ["gql"] } as unknown as LanguageRegistration;
+const JSON_GRAMMAR = jsonGrammar as unknown as LanguageRegistration;
 let syntaxHighlighter: Promise<HighlighterCore> | null = null;
 
 function getSyntaxHighlighter() {
   syntaxHighlighter ??= Promise.all([
     import("shiki/core"),
     import("shiki/engine/javascript"),
-    import("@shikijs/langs/graphql"),
-    import("@shikijs/langs/json"),
     import("@shikijs/themes/catppuccin-latte"),
-  ]).then(([{ createHighlighterCore }, { createJavaScriptRegexEngine }, graphqlLanguages, jsonLanguages, theme]) =>
+  ]).then(([{ createHighlighterCore }, { createJavaScriptRegexEngine }, theme]) =>
     createHighlighterCore({
       themes: [theme.default],
-      langs: [...graphqlLanguages.default, ...jsonLanguages.default],
+      langs: [GRAPHQL_GRAMMAR, JSON_GRAMMAR],
       engine: createJavaScriptRegexEngine(),
     })
   );
