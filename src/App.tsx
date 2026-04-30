@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useLazyQuery } from "@apollo/client/react/compiled";
 import { type DocumentNode, print } from "graphql";
 import {
+  GET_COUNTRY_CAPITAL_ERROR,
   GET_COUNTRY_WITH_MOCK,
   GET_COUNTRIES_MOCK,
   GET_COUNTRY_NEW_FIELD,
@@ -11,6 +12,7 @@ import {
 
 import GetCountriesMock from "./queries/__graphql_mocks__/GetCountries.json";
 import GetCountryMock from "./queries/__graphql_mocks__/GetCountry.json";
+import GetCountryWithCapitalErrorMock from "./queries/__graphql_mocks__/GetCountryWithCapitalError.json";
 import GetCountryWithPopulationMock from "./queries/__graphql_mocks__/GetCountryWithPopulation.json";
 import GetCountryWithWeatherMock from "./queries/__graphql_mocks__/GetCountryWithWeather.json";
 
@@ -49,6 +51,13 @@ const DEMOS = {
     mockContent: null,
     variables: { code: "US" },
   },
+  "field-error": {
+    label: "Field Mock (Error)",
+    query: GET_COUNTRY_CAPITAL_ERROR,
+    mockFilename: "GetCountryWithCapitalError.json",
+    mockContent: GetCountryWithCapitalErrorMock,
+    variables: { code: "US" },
+  },
 } as const;
 
 type DemoKey = keyof typeof DEMOS;
@@ -59,10 +68,12 @@ function DemoPanel({ query, mockFilename, mockContent, variables }: {
   mockContent: unknown;
   variables?: Record<string, unknown>;
 }) {
-  const [executeQuery, { loading, error, data }] = useLazyQuery<Record<string, unknown>>(query);
+  const [executeQuery, { loading, error, data }] = useLazyQuery<Record<string, unknown>>(query, {
+    errorPolicy: "all",
+  });
 
   const panelStyle: React.CSSProperties = {
-    flex: 1,
+    flex: "1 1 22rem",
     minWidth: 0,
     padding: "0.75rem",
     background: "#f8f9fa",
@@ -72,7 +83,7 @@ function DemoPanel({ query, mockFilename, mockContent, variables }: {
 
   return (
     <div>
-      <div style={{ display: "flex", gap: "0.75rem", marginBottom: "0.75rem" }}>
+      <div style={{ display: "flex", gap: "0.75rem", marginBottom: "0.75rem", flexWrap: "wrap" }}>
         <div style={panelStyle}>
           <h3 style={{ margin: "0 0 0.5rem 0", fontSize: "0.95rem" }}>GraphQL Query</h3>
           <pre style={{ background: "#fff", padding: "0.75rem", borderRadius: "4px", overflow: "auto", textAlign: "left", margin: 0, maxHeight: "400px", fontSize: "0.8rem" }}>
@@ -98,7 +109,7 @@ function DemoPanel({ query, mockFilename, mockContent, variables }: {
         </div>
       </div>
 
-      <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
+      <div style={{ display: "flex", gap: "1rem", alignItems: "center", flexWrap: "wrap" }}>
         <button
           onClick={() => executeQuery(variables ? { variables } : undefined)}
           style={{
@@ -120,7 +131,11 @@ function DemoPanel({ query, mockFilename, mockContent, variables }: {
       </div>
 
       {loading && <p>Loading...</p>}
-      {error && <p style={{ color: "red" }}>Error: {error.message}</p>}
+      {error && (
+        <div style={{ marginTop: "1rem", padding: "0.75rem", border: "1px solid #dc3545", borderRadius: "6px", background: "#fff5f5", color: "#9f1239", textAlign: "left" }}>
+          <strong>GraphQL Error:</strong> {error.message}
+        </div>
+      )}
 
       {data && (
         <div style={{ marginTop: "1rem" }}>
@@ -141,12 +156,26 @@ function App() {
 
   const demo = DEMOS[selectedDemo];
 
+  const demoButtonStyle = (key: DemoKey): React.CSSProperties => ({
+    padding: "0.4rem 0.75rem",
+    background: selectedDemo === key ? "#007bff" : "#6c757d",
+    color: "white",
+    border: selectedDemo === key ? "2px solid #0056b3" : "2px solid #545b62",
+    borderRadius: "4px",
+    cursor: "pointer",
+    fontSize: "0.85rem",
+    fontWeight: "bold",
+    lineHeight: 1.2,
+    maxWidth: "100%",
+    whiteSpace: "normal",
+  });
+
   return (
-    <div style={{ padding: "0.75rem 2rem 2rem", maxWidth: "1200px", margin: "0.5rem auto 0" }}>
+    <div style={{ padding: "0.75rem clamp(1rem, 4vw, 2rem) 2rem", width: "min(100%, 1200px)", boxSizing: "border-box", margin: "0.5rem auto 0" }}>
       <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: "0.75rem", flexWrap: "wrap", gap: "0.25rem 1rem" }}>
         <h1 style={{ margin: 0, fontSize: "1.4rem", color: "#1a1a2e" }}>GraphQL <code style={{ fontSize: "1.3rem", color: "#e83e8c" }}>@mock</code> Directive Demo</h1>
         <nav style={{ display: "flex", gap: "1rem", fontSize: "0.8rem" }}>
-          <a href="https://public.larah.me/~mark/MockSpec.wip.html" target="_blank" rel="noreferrer">Spec</a>
+          <a href="https://public.larah.me/~mark/MockSpec.html" target="_blank" rel="noreferrer">Spec</a>
           <a href="https://github.com/graphql/ai-wg/issues/79" target="_blank" rel="noreferrer">AI WG Discussion</a>
           <a href="https://github.com/magicmark/mock-spec-demo" target="_blank" rel="noreferrer">Source</a>
         </nav>
@@ -159,16 +188,7 @@ function App() {
             <button
               key={key}
               onClick={() => setSelectedDemo(key)}
-              style={{
-                padding: "0.4rem 0.75rem",
-                background: selectedDemo === key ? "#007bff" : "#6c757d",
-                color: "white",
-                border: selectedDemo === key ? "2px solid #0056b3" : "2px solid #545b62",
-                borderRadius: "4px",
-                cursor: "pointer",
-                fontSize: "0.85rem",
-                fontWeight: "bold",
-              }}
+              style={demoButtonStyle(key)}
             >
               {DEMOS[key].label}
             </button>
