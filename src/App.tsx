@@ -3,6 +3,7 @@ import { useLazyQuery } from "@apollo/client/react/compiled";
 import { type DocumentNode, print } from "graphql";
 import {
   GET_COUNTRY_CAPITAL_ERROR,
+  GET_COUNTRY_WITH_FRAGMENT_MOCK,
   GET_COUNTRY_WITH_MOCK,
   GET_COUNTRIES_MOCK,
   GET_COUNTRY_NEW_FIELD,
@@ -10,6 +11,7 @@ import {
   GET_COUNTRY_INLINE_VALUE,
 } from "./queries/countries";
 
+import CountryCapitalFragmentMock from "./queries/__graphql_mocks__/CountryCapitalFragment.json";
 import GetCountriesMock from "./queries/__graphql_mocks__/GetCountries.json";
 import GetCountryMock from "./queries/__graphql_mocks__/GetCountry.json";
 import GetCountryWithCapitalErrorMock from "./queries/__graphql_mocks__/GetCountryWithCapitalError.json";
@@ -28,6 +30,13 @@ const DEMOS = {
     query: GET_COUNTRY_WITH_MOCK,
     mockFilename: "GetCountry.json",
     mockContent: GetCountryMock,
+    variables: { code: "US" },
+  },
+  "fragment-field-existing": {
+    label: "Fragment Field Mock (Existing)",
+    query: GET_COUNTRY_WITH_FRAGMENT_MOCK,
+    mockFilename: "CountryCapitalFragment.json",
+    mockContent: CountryCapitalFragmentMock,
     variables: { code: "US" },
   },
   "field-new": {

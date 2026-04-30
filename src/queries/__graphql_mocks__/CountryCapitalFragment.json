@@ -1,0 +1,7 @@
+{
+  "fictional-capital": {
+    "data": "Wakanda City",
+    "__path__": "capital",
+    "__description__": "A fictional capital city name for testing a mock defined by a fragment"
+  }
+}

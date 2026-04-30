@@ -108,10 +108,11 @@ Visit http://localhost:5173 and try the different demos:
 1. **Operation-Level Mock**: Click "Execute Query" and note NO network request in DevTools
 2. **Real API**: See the POST request to the countries API
 3. **Field Mock (Existing)**: Note the request is sent, but `capital` is mocked
-4. **Field Mock (New)**: Add a scalar field that is not returned by the real API
-5. **Field Mock (New w/ Selection Set)**: Add a mocked object subtree
-6. **Field Mock (Inline Value)**: Use inline scalar values without a mock file
-7. **Field Mock (Error)**: See a field-level GraphQL error merged with real data
+4. **Fragment Field Mock (Existing)**: Define the mocked `capital` field in a fragment and load its mock file by fragment name
+5. **Field Mock (New)**: Add a scalar field that is not returned by the real API
+6. **Field Mock (New w/ Selection Set)**: Add a mocked object subtree
+7. **Field Mock (Inline Value)**: Use inline scalar values without a mock file
+8. **Field Mock (Error)**: See a field-level GraphQL error merged with real data
 
 ## Mock File Format
 
