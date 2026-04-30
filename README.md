@@ -105,14 +105,17 @@ pnpm dev
 
 Visit http://localhost:5173 and try the different demos:
 
-1. **Operation-Level Mock**: Click "Execute Query" and note NO network request in DevTools
-2. **Real API**: See the POST request to the countries API
-3. **Field Mock (Existing)**: Note the request is sent, but `capital` is mocked
-4. **Fragment Field Mock (Existing)**: Define the mocked `capital` field in a fragment and load its mock file by fragment name
-5. **Field Mock (New)**: Add a scalar field that is not returned by the real API
-6. **Field Mock (New w/ Selection Set)**: Add a mocked object subtree
-7. **Field Mock (Inline Value)**: Use inline scalar values without a mock file
-8. **Field Mock (Error)**: See a field-level GraphQL error merged with real data
+1. **Operation**: Click "Execute Query" and note NO network request in DevTools
+2. **Field (Existing)**: Note the request is sent, but `capital` is mocked
+3. **Fragment Field (Existing)**: Define the mocked `capital` field in a fragment and load its mock file by fragment name
+4. **Field (Alias)**: Mock the same field twice, once under its field name and once under an alias
+5. **List Field**: Replace an existing list field with a mocked list
+6. **List Field (Nested)**: Apply the same mocked field value to each item returned by a list
+7. **List Field in Fragment**: Define the list-item mock in a fragment spread beneath a list field
+8. **Field (New)**: Add a scalar field that is not returned by the real API
+9. **Field (New w/ Selection Set)**: Add a mocked object subtree
+10. **Field (Inline Value)**: Use inline scalar values without a mock file
+11. **Field (Error)**: See a field-level GraphQL error merged with real data
 
 ## Mock File Format
 

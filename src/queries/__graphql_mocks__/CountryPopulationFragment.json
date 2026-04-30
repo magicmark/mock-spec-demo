@@ -1,0 +1,7 @@
+{
+  "estimated-population": {
+    "data": 331900000,
+    "__path__": "population",
+    "__description__": "An estimated population value applied from a fragment to each country returned by a continent's country list"
+  }
+}

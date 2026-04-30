@@ -1,0 +1,12 @@
+{
+  "fictional-capital": {
+    "data": "Wakanda City",
+    "__path__": "country.capital",
+    "__description__": "A fictional capital city name for the unaliased capital field"
+  },
+  "fictional-home": {
+    "data": "Birnin Zana",
+    "__path__": "country.home",
+    "__description__": "A fictional capital city name for the aliased home field"
+  }
+}

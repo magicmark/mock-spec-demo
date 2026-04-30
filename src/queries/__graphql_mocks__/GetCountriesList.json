@@ -1,0 +1,20 @@
+{
+  "antarctic-countries": {
+    "data": [
+      {
+        "code": "AQ",
+        "name": "Antarctica"
+      },
+      {
+        "code": "BV",
+        "name": "Bouvet Island"
+      },
+      {
+        "code": "TF",
+        "name": "French Southern Territories"
+      }
+    ],
+    "__path__": "continent.countries",
+    "__description__": "A mocked list of Antarctic country and territory entries"
+  }
+}
