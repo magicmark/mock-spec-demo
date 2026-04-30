@@ -1,24 +1,15 @@
-FROM node:24-slim AS build
+FROM node:24-slim AS base
 
-ENV CI=true
-RUN corepack enable pnpm && corepack install -g pnpm@latest
-
+COPY . /app
 WORKDIR /app
-COPY package.json pnpm-lock.yaml ./
-RUN pnpm install --no-frozen-lockfile
 
-COPY . .
-RUN pnpm run build
+FROM base AS build
+RUN npm ci
+RUN npm run build
 
-# ---
-
-FROM node:24-slim AS runtime
-
+FROM node:24-slim
 RUN npm install -g serve
-
-WORKDIR /app
-COPY --from=build /app/dist ./dist
+COPY --from=build /app/dist /app/dist
 
 EXPOSE 8080
-
-CMD ["serve", "-s", "dist", "-l", "8080"]
+CMD ["serve", "-s", "/app/dist", "-l", "8080"]
