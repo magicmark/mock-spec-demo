@@ -257,7 +257,7 @@ function PageFrame({ children }: { children: React.ReactNode }) {
       <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: "0.75rem", flexWrap: "wrap", gap: "0.25rem 1rem" }}>
         <h1 style={{ margin: 0, fontSize: "1.4rem", color: "#1a1a2e" }}>GraphQL <code style={{ fontSize: "1.3rem", color: "#e83e8c" }}>@mock</code> Directive Demo <span style={{ fontSize: "0.8rem", color: "rgb(108, 117, 125)", fontWeight: 400 }}>(Apollo)</span></h1>
         <nav style={{ display: "flex", gap: "1rem", fontSize: "0.8rem" }}>
-          <a href="https://public.larah.me/~mark/MockSpec.html" target="_blank" rel="noreferrer">Spec</a>
+          <a href="https://gaps.graphql.org/GAP-10/" target="_blank" rel="noreferrer">Spec</a>
           <a href="https://github.com/magicmark/mock-spec-demo" target="_blank" rel="noreferrer">Source</a>
           <a href="https://github.com/magicmark/apollo-client-mock-directive-plugin" target="_blank" rel="noreferrer">Apollo Link</a>
           <a href="https://mock-spec-demo-relay.larah.me/" target="_blank" rel="noreferrer">Relay Version</a>
