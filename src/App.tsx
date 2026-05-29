@@ -293,7 +293,10 @@ function DemoSelector({
               return (
                 <button
                   key={group.id}
-                  onClick={() => setActiveGroupId(group.id)}
+                  onClick={() => {
+                    setActiveGroupId(group.id);
+                    setSelectedDemo(group.demos[0]);
+                  }}
                   style={{
                     padding: "0.36rem 0.65rem",
                     borderRadius: "999px",
