@@ -259,7 +259,7 @@ function PageFrame({ children }: { children: React.ReactNode }) {
         <nav style={{ display: "flex", gap: "1rem", fontSize: "0.8rem" }}>
           <a href="https://public.larah.me/~mark/MockSpec.html" target="_blank" rel="noreferrer">Spec</a>
           <a href="https://github.com/magicmark/mock-spec-demo" target="_blank" rel="noreferrer">Source</a>
-          <a href="https://github.com/graphql/ai-wg/issues/79" target="_blank" rel="noreferrer">AI WG Discussion</a>
+          <a href="https://github.com/magicmark/mock-spec-demo-relay-plugin" target="_blank" rel="noreferrer">Apollo Link</a>
           <a href="https://mock-spec-demo-relay.larah.me/" target="_blank" rel="noreferrer">Relay Version</a>
         </nav>
       </div>
